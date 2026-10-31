@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+# Large inputs and build outputs: downloaded or generated, never committed
+work/
+*.osm.pbf
+*.pmtiles
+*.mbtiles
+*.tar
+*.tif
