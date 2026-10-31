@@ -25,4 +25,4 @@ A cell is one zoom-level-9 tile (about 55 × 55 km at Italian latitudes). For ea
 Tile packages and routing graphs are derived from OpenStreetMap and distributed under the **ODbL**. This repository publishes the complete recipe to rebuild them, including the tag changes made during preprocessing.
 
 ## Code license
-The scripts in this repository are released under the MIT license.
+The scripts in this repository are released under the [MIT license](LICENSE). The data they produce is covered by the data licenses above.
