@@ -21,6 +21,7 @@ Run from the repository root. Inputs and outputs go to `work/` (not versioned).
 | OSM extracts, preprocessing, routing graph | `pipeline/build_routing.sh` | `osmium-tool`, venv with `pipeline/requirements.txt` in `work/.venv` |
 | `routing.tar` per cell | `python3 pipeline/pack_cells.py work/valhalla/tiles work/cells 272/180 …` | |
 | `dem.pmtiles`, contour lines, `base.pmtiles`, `trek.pmtiles` per cell | `pipeline/build_tiles.sh 272/180 …` | Java 25, `work/planetiler/planetiler.jar` (Planetiler 0.10.2), `pmtiles` CLI, venv |
+| Release assets (`<cell>_<file>`) + `manifest.json` | `python3 pipeline/make_manifest.py work/cells <version> work/release` | |
 
 `dem.pmtiles` is extracted from the [Mapterhorn](https://mapterhorn.com) planet file (terrarium, zooms 9–12). `base.pmtiles` uses Planetiler's built-in OpenMapTiles profile; `trek.pmtiles` uses [`profiles/TrekProfile.java`](profiles/TrekProfile.java) (layers `hiking_route`, `trail`, `mountain_poi`, `contour`), with contour lines traced from the DEM by `pipeline/contours.py`.
 
