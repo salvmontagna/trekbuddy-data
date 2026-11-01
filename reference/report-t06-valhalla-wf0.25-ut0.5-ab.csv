@@ -1,0 +1,21 @@
+osm_relation,group,area,cai_scale,engine,status,ref_km,route_km,length_diff_pct,route_in_ref_buffer_pct,ref_covered_pct,ref_dplus_m,route_dplus_m,dplus_diff_m,dplus_diff_pct
+140455,Alpi,Dolomiti Gardena-Badia,E,valhalla-wf0.25-ut0.5-ab,ok,5.71,8.00,40.1,0.6,0.9,472,427,-45,-9.5
+1640019,Alpi,Dolomiti Gardena-Badia,EE,valhalla-wf0.25-ut0.5-ab,ok,6.60,6.60,0.0,100.0,100.0,1021,1021,-0,-0.0
+190764,Alpi,Dolomiti di Brenta,E,valhalla-wf0.25-ut0.5-ab,ok,9.38,8.61,-8.2,80.0,73.4,1568,1549,-19,-1.2
+190765,Alpi,Dolomiti di Brenta,EE,valhalla-wf0.25-ut0.5-ab,ok,5.46,5.46,-0.0,100.0,100.0,443,443,-0,-0.0
+162371,Alpi,Gran Paradiso - Cogne,E,valhalla-wf0.25-ut0.5-ab,ok,14.06,14.29,1.7,63.2,64.4,1163,1328,165,14.2
+6108820,Alpi,Gran Paradiso - Cogne,EE,valhalla-wf0.25-ut0.5-ab,ok,4.16,4.16,0.0,100.0,100.0,45,45,0,0.0
+183595,Alpi,Grigne - Lecco,E,valhalla-wf0.25-ut0.5-ab,ok,6.19,5.07,-18.2,0.8,0.6,891,853,-38,-4.3
+74613,Alpi,Grigne - Lecco,EE,valhalla-wf0.25-ut0.5-ab,ok,7.84,7.79,-0.8,31.0,30.7,1585,1645,60,3.8
+140670,Alpi,Alpi Carniche e Giulie,E,valhalla-wf0.25-ut0.5-ab,ok,14.68,5.64,-61.5,0.7,0.3,1603,418,-1184,-73.9
+140250,Alpi,Alpi Carniche e Giulie,EE,valhalla-wf0.25-ut0.5-ab,ok,10.47,11.75,12.1,0.3,0.3,1542,1559,17,1.1
+357948,Appennino,Appennino tosco-emiliano,E,valhalla-wf0.25-ut0.5-ab,ok,6.30,6.29,-0.0,100.0,100.0,1113,1113,0,0.0
+357962,Appennino,Appennino tosco-emiliano,EE,valhalla-wf0.25-ut0.5-ab,ok,15.22,15.13,-0.6,89.9,89.4,1806,1799,-8,-0.4
+7448628,Appennino,Monti Sibillini,E,valhalla-wf0.25-ut0.5-ab,ok,15.91,15.39,-3.2,0.7,0.7,457,323,-134,-29.3
+10764782,Appennino,Monti Sibillini,EE,valhalla-wf0.25-ut0.5-ab,ok,4.05,3.98,-1.8,5.6,5.5,624,352,-271,-43.5
+7383528,Appennino,Gran Sasso,E,valhalla-wf0.25-ut0.5-ab,ok,6.56,5.01,-23.7,1.1,0.7,494,332,-162,-32.7
+7424361,Appennino,Gran Sasso,EE,valhalla-wf0.25-ut0.5-ab,ok,13.06,13.07,0.1,61.9,61.9,197,248,51,26.1
+9800434,Appennino,Majella,E,valhalla-wf0.25-ut0.5-ab,ok,10.99,10.57,-3.8,94.0,90.4,1043,1033,-10,-1.0
+4864774,Appennino,Majella,EE,valhalla-wf0.25-ut0.5-ab,ok,7.03,7.03,-0.0,100.0,100.0,1353,1353,0,0.0
+11373620,Appennino,Pollino,E,valhalla-wf0.25-ut0.5-ab,ok,9.45,7.94,-16.0,52.5,44.1,505,402,-104,-20.5
+12757094,Appennino,Pollino,EE,valhalla-wf0.25-ut0.5-ab,ok,9.33,11.74,25.8,17.4,21.9,1117,1516,399,35.8

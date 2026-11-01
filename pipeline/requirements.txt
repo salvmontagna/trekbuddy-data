@@ -1,0 +1,5 @@
+pyvalhalla==3.9.1
+osmium==4.3.2
+pillow==13.0.0
+numpy==2.5.4
+contourpy==1.4.0
