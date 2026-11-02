@@ -25,7 +25,8 @@ Run from the repository root with bash (Git Bash on Windows). Inputs and outputs
 | `base.pmtiles` (whole coverage, cut per cell), `dem.pmtiles`, contour lines, `trek.pmtiles`; `work/planetiler/overview.pmtiles` (base zooms 0-8, whole coverage) | `pipeline/build_tiles.sh` (all cells) or `pipeline/build_tiles.sh 272/180 …` | Java 25 (`JAVA`), `work/planetiler/planetiler.jar` (Planetiler 0.10.2), `pmtiles` CLI, venv |
 | `index.sqlite` per cell: offline search (FTS5) and the hiking route catalogue, keyed by `relation_id` like `trek.pmtiles` | `python3 -I pipeline/build_index.py work/osm/build.osm.pbf coverage/cells.csv work/cells` (all built cells) or `… 9-272-182 …` | venv, `pmtiles` CLI (reads the cells' `dem.pmtiles`) |
 | `routing.tar` + `routing.tar.gz` per cell | `python3 -I pipeline/pack_cells.py work/valhalla/tiles work/cells 272/180 …` | |
-| Release folders per group (`<cell>_<file>` + `manifest.json`), `overview/overview.pmtiles` and `releases.json` | `python3 -I pipeline/make_manifest.py work/cells coverage/cells.csv <version> work/release work/planetiler/overview.pmtiles` | |
+| `work/trek-online.pmtiles`: the `trek.pmtiles` of all the cells in one file, read by the app over the network where a cell is not downloaded | `python3 -I pipeline/merge_pmtiles.py work/cells trek.pmtiles work/trek-online.pmtiles` | venv |
+| Release folders per group (`<cell>_<file>` + `manifest.json`), `overview/overview.pmtiles`, `trek-online/trek-online.pmtiles` and `releases.json` | `python3 -I pipeline/make_manifest.py work/cells coverage/cells.csv <version> work/release work/planetiler/overview.pmtiles work/trek-online.pmtiles` | |
 
 Environment: `OSMIUM` and `JAVA` default to `osmium` and `java` on the `PATH`; `JOBS` (default 3) sets how many cells `build_tiles.sh` builds at once; `VALHALLA_THREADS` (default 4) and `VALHALLA_ENHANCE_THREADS` set the Valhalla threads. The venv is `work/.venv` with `pipeline/requirements.txt`.
 

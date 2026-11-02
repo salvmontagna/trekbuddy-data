@@ -8,11 +8,12 @@ also carries unpacked_size, the size of routing.tar once unpacked on the phone. 
 cell in the app before download: the most important place in its index.sqlite (city, then town,
 then village), the one nearest the cell centre.
 releases.json, in the output folder, lists the groups with their release name (tag), cells
-and total size, and the overview (base zooms 0-8 of the whole coverage, downloaded by the app at
-first launch) with its tag, asset, size and SHA-256.
+and total size, the overview (base zooms 0-8 of the whole coverage, downloaded by the app at
+first launch) and trek_online (trek overlay of the whole coverage, read by the app over the network
+by range requests where a cell is not downloaded), each with its tag, asset, size and SHA-256.
 
 Usage: python3 -I pipeline/make_manifest.py work/cells coverage/cells.csv <version> work/release \
-           [work/planetiler/overview.pmtiles]
+           [work/planetiler/overview.pmtiles [work/trek-online.pmtiles]]
        (version: date of the OSM build, e.g. 2026-11-01)
 """
 import csv
@@ -75,7 +76,8 @@ def link_or_copy(src: Path, dst: Path) -> None:
         shutil.copy2(src, dst)
 
 
-def main(cells_dir: str, cells_csv: str, version: str, out_dir: str, overview: str | None = None) -> None:
+def main(cells_dir: str, cells_csv: str, version: str, out_dir: str, overview: str | None = None,
+         trek_online: str | None = None) -> None:
     with open(cells_csv, encoding="utf-8") as f:
         group_of = {row["cell"]: row["group"] for row in csv.DictReader(f)}
     out = Path(out_dir)
@@ -112,15 +114,17 @@ def main(cells_dir: str, cells_csv: str, version: str, out_dir: str, overview: s
             "size": sum(f["size"] for c in cells for f in c["files"]),
         })
     releases = {"schema": 1, "version": version, "releases": index}
-    if overview:
-        src = Path(overview)
-        (out / "overview").mkdir(parents=True, exist_ok=True)
-        link_or_copy(src, out / "overview" / "overview.pmtiles")
-        releases["overview"] = {"tag": f"overview-{version}", "asset": "overview.pmtiles",
-                                "size": src.stat().st_size, "sha256": sha256(src)}
-        print(f"overview: {src.stat().st_size} bytes")
+    for key, folder, path in [("overview", "overview", overview), ("trek_online", "trek-online", trek_online)]:
+        if not path:
+            continue
+        src = Path(path)
+        (out / folder).mkdir(parents=True, exist_ok=True)
+        link_or_copy(src, out / folder / f"{folder}.pmtiles")
+        releases[key] = {"tag": f"{folder}-{version}", "asset": f"{folder}.pmtiles",
+                         "size": src.stat().st_size, "sha256": sha256(src)}
+        print(f"{folder}: {src.stat().st_size} bytes")
     (out / "releases.json").write_text(json.dumps(releases, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:6])
+    main(*sys.argv[1:7])

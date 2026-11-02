@@ -4,3 +4,4 @@ pillow==13.0.0
 numpy==2.5.4
 contourpy==1.4.0
 shapely==2.2.0
+pmtiles==3.8.1
