@@ -5,6 +5,10 @@ name: Pipeline trial
 
 on:
   workflow_dispatch:
+    inputs:
+      date:
+        description: Geofabrik extract date (YYMMDD); italy, alps, slovenia and croatia are taken from that date
+        required: true
 
 jobs:
   trial:
@@ -57,16 +61,23 @@ jobs:
         run: |
           D=work/trial/osm
           start=$SECONDS
-          for p in europe/italy europe/alps europe/slovenia europe/croatia europe/france/corse; do
-            curl -fsSL --retry 3 -o $D/$(basename $p).osm.pbf https://download.geofabrik.de/$p-latest.osm.pbf
+          # Extracts of one date share the same OSM snapshot. Geofabrik has no dated files for
+          # France's regions, so corse is the latest one and may be a day off.
+          for p in europe/italy europe/alps europe/slovenia europe/croatia; do
+            curl -fsSL --retry 3 -o $D/$(basename $p).osm.pbf https://download.geofabrik.de/$p-${{ inputs.date }}.osm.pbf
           done
+          curl -fsSL --retry 3 -o $D/corse.osm.pbf https://download.geofabrik.de/europe/france/corse-latest.osm.pbf
           echo "download: $((SECONDS - start)) s" >> work/trial/measures.txt
           echo merge >> work/trial/measures.txt
           $M osmium merge -o $D/merged.osm.pbf $D/italy.osm.pbf $D/alps.osm.pbf $D/slovenia.osm.pbf $D/croatia.osm.pbf $D/corse.osm.pbf
           rm $D/italy.osm.pbf $D/alps.osm.pbf $D/slovenia.osm.pbf $D/croatia.osm.pbf $D/corse.osm.pbf
-          echo clip >> work/trial/measures.txt
-          $M osmium extract -s smart -p work/trial/coverage-area.geojson -o $D/build.osm.pbf $D/merged.osm.pbf
+          # Objects in two extracts of different snapshots come out in two versions: keep the newest.
+          echo time-filter >> work/trial/measures.txt
+          $M osmium time-filter -o $D/single.osm.pbf $D/merged.osm.pbf
           rm $D/merged.osm.pbf
+          echo clip >> work/trial/measures.txt
+          $M osmium extract -s smart -p work/trial/coverage-area.geojson -o $D/build.osm.pbf $D/single.osm.pbf
+          rm $D/single.osm.pbf
           echo preprocess >> work/trial/measures.txt
           $M work/.venv/bin/python -I pipeline/preprocess_osm.py $D/build.osm.pbf $D/build-pre.osm.pbf work/trial/preprocess-report.json
           du -sh $D/* >> work/trial/measures.txt
