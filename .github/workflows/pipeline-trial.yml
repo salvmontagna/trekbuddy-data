@@ -1,0 +1,142 @@
+# M1-02 trial: can a free GitHub-hosted runner build the whole coverage (169 cells)?
+# Runs the heavy steps on the full area and records wall time and peak memory of each step,
+# plus free disk space, in measures.txt (uploaded as an artifact). Manual start only.
+name: Pipeline trial
+
+on:
+  workflow_dispatch:
+
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      # No spaces in the format: $M is expanded unquoted.
+      M: /usr/bin/time -f %e_s,_peak_%M_KB -a -o work/trial/measures.txt
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          df -h / | tee -a disk.txt
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup \
+            /opt/hostedtoolcache/CodeQL /usr/local/share/boost /usr/share/swift
+          sudo docker image prune --all --force > /dev/null
+          df -h / | tee -a disk.txt
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Tools
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q osmium-tool time
+          python -m venv work/.venv
+          work/.venv/bin/pip install -q -r pipeline/requirements.txt
+          mkdir -p work/planetiler work/trial/osm
+          curl -fsSL -o work/planetiler/planetiler.jar \
+            https://github.com/onthegomap/planetiler/releases/download/v0.10.2/planetiler.jar
+          curl -fsSL https://github.com/protomaps/go-pmtiles/releases/download/v1.31.2/go-pmtiles_1.31.2_Linux_x86_64.tar.gz \
+            | sudo tar -xz -C /usr/local/bin pmtiles
+          work/.venv/bin/python - <<'PY'
+          import json
+          from shapely.geometry import shape, mapping
+          from shapely.ops import unary_union
+          fc = json.load(open("coverage/cells.geojson", encoding="utf-8"))
+          area = unary_union([shape(f["geometry"]) for f in fc["features"]])
+          json.dump({"type": "Feature", "properties": {}, "geometry": mapping(area)},
+                    open("work/trial/coverage-area.geojson", "w"))
+          PY
+
+      - name: "a. Extracts: download, merge, clip, preprocess"
+        run: |
+          D=work/trial/osm
+          start=$SECONDS
+          for p in europe/italy europe/alps europe/slovenia europe/croatia europe/france/corse; do
+            curl -fsSL --retry 3 -o $D/$(basename $p).osm.pbf https://download.geofabrik.de/$p-latest.osm.pbf
+          done
+          echo "download: $((SECONDS - start)) s" >> work/trial/measures.txt
+          echo merge >> work/trial/measures.txt
+          $M osmium merge -o $D/merged.osm.pbf $D/italy.osm.pbf $D/alps.osm.pbf $D/slovenia.osm.pbf $D/croatia.osm.pbf $D/corse.osm.pbf
+          rm $D/italy.osm.pbf $D/alps.osm.pbf $D/slovenia.osm.pbf $D/croatia.osm.pbf $D/corse.osm.pbf
+          echo clip >> work/trial/measures.txt
+          $M osmium extract -s smart -p work/trial/coverage-area.geojson -o $D/build.osm.pbf $D/merged.osm.pbf
+          rm $D/merged.osm.pbf
+          echo preprocess >> work/trial/measures.txt
+          $M work/.venv/bin/python -I pipeline/preprocess_osm.py $D/build.osm.pbf $D/build-pre.osm.pbf work/trial/preprocess-report.json
+          du -sh $D/* >> work/trial/measures.txt
+          df -h / >> work/trial/measures.txt
+
+      - name: "b. Valhalla graph for the whole area"
+        run: |
+          mkdir -p work/trial/valhalla
+          work/.venv/bin/valhalla_build_config --mjolnir-tile-dir work/trial/valhalla/tiles \
+            --mjolnir-tile-extract work/trial/valhalla/tiles.tar --mjolnir-concurrency 4 > work/trial/valhalla/valhalla.json
+          BIN="$(work/.venv/bin/python -m valhalla print_bin_path)"
+          echo valhalla >> work/trial/measures.txt
+          $M "$BIN/valhalla_build_tiles" -c work/trial/valhalla/valhalla.json work/trial/osm/build-pre.osm.pbf > work/trial/valhalla/build.log 2>&1
+          du -sh work/trial/valhalla/tiles >> work/trial/measures.txt
+          df -h / >> work/trial/measures.txt
+          # The tiles are not needed by the next steps: free the disk.
+          rm -rf work/trial/valhalla/tiles work/trial/osm/build-pre.osm.pbf
+
+      - name: "c. base on the whole area, cut into the 169 cells"
+        run: |
+          cd work/planetiler
+          echo base-all >> ../trial/measures.txt
+          /usr/bin/time -f "%e s, peak %M KB" -a -o ../trial/measures.txt \
+            java -Xmx12g -jar planetiler.jar --osm_path=../trial/osm/build.osm.pbf --minzoom=9 --maxzoom=14 \
+            --force --download --output=../trial/base-all.pmtiles > ../trial/base-all.log 2>&1
+          cd ../..
+          start=$SECONDS
+          tail -n +2 coverage/cells.csv | while IFS=, read -r cell x y rest; do
+            b="$(work/.venv/bin/python -c "
+          import sys; sys.path.insert(0, 'pipeline'); from coverage import tile_bounds
+          w, s, e, n = tile_bounds($x, $y); d = 1e-6; print(f'{w + d},{s + d},{e - d},{n - d}')")"
+            mkdir -p work/trial/cells/$cell
+            pmtiles extract work/trial/base-all.pmtiles work/trial/cells/$cell/base.pmtiles --bbox="$b" --minzoom=9 --maxzoom=14 > /dev/null 2>&1
+          done
+          echo "base-extract-169: $((SECONDS - start)) s" >> work/trial/measures.txt
+          du -sh work/trial/base-all.pmtiles work/trial/cells >> work/trial/measures.txt
+          df -h / >> work/trial/measures.txt
+
+      - name: "d. DEM, contours, trek on 3 cells"
+        run: |
+          cd work/planetiler
+          for c in 272/180 272/184 282/193; do
+            x="${c%/*}"; y="${c#*/}"; out=../trial/percell/9-$x-$y; mkdir -p $out
+            b="$(../.venv/bin/python -c "
+          import sys; sys.path.insert(0, '../../pipeline'); from coverage import tile_bounds
+          w, s, e, n = tile_bounds($x, $y); d = 1e-6; print(f'{w + d},{s + d},{e - d},{n - d}')")"
+            common=(--osm_path=../trial/osm/build.osm.pbf --bounds="$b" --minzoom=9 --maxzoom=14 --force)
+            T="/usr/bin/time -f %e_s,_peak_%M_KB -a -o ../trial/measures.txt"
+            echo "dem 9-$x-$y" >> ../trial/measures.txt
+            $T pmtiles extract https://download.mapterhorn.com/planet.pmtiles $out/dem.pmtiles --bbox="$b" --minzoom=9 --maxzoom=12 > /dev/null 2>&1
+            echo "contours 9-$x-$y" >> ../trial/measures.txt
+            $T ../.venv/bin/python ../../pipeline/contours.py $out
+            echo "trek 9-$x-$y" >> ../trial/measures.txt
+            $T java -Xmx8g -cp planetiler.jar ../../profiles/TrekProfile.java "${common[@]}" \
+              --contours_path=$out/contours.geojson --output=$out/trek.pmtiles > $out/trek.log 2>&1
+          done
+          cd ../..
+          du -sh work/trial/percell/* >> work/trial/measures.txt
+          df -h / >> work/trial/measures.txt
+
+      - name: Measures
+        if: always()
+        run: cat disk.txt work/trial/measures.txt || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: measures
+          path: |
+            disk.txt
+            work/trial/measures.txt
+            work/trial/valhalla/build.log
+            work/trial/base-all.log

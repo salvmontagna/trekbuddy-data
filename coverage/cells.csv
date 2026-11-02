@@ -1,0 +1,170 @@
+cell,x,y,italy_share,region,group,extracts
+9-265-182,265,182,0.171,valle_aosta,nord-ovest,italy alps
+9-265-183,265,183,0.127,piemonte,nord-ovest,italy alps
+9-265-184,265,184,0.279,piemonte,nord-ovest,italy alps
+9-265-185,265,185,0.147,piemonte,nord-ovest,italy alps
+9-266-182,266,182,0.743,valle_aosta,nord-ovest,italy alps
+9-266-183,266,183,0.954,piemonte,nord-ovest,italy alps
+9-266-184,266,184,1.0,piemonte,nord-ovest,italy
+9-266-185,266,185,0.907,piemonte,nord-ovest,italy alps
+9-266-186,266,186,0.157,liguria,nord-ovest,italy alps
+9-267-181,267,181,0.333,piemonte,nord-ovest,italy alps
+9-267-182,267,182,0.931,piemonte,nord-ovest,italy alps
+9-267-183,267,183,1.0,piemonte,nord-ovest,italy
+9-267-184,267,184,1.0,piemonte,nord-ovest,italy
+9-267-185,267,185,0.972,piemonte,nord-ovest,italy
+9-267-186,267,186,0.326,liguria,nord-ovest,italy
+9-267-191,267,191,0.044,sardegna,isole,italy
+9-267-192,267,192,0.309,sardegna,isole,italy
+9-267-193,267,193,0.059,sardegna,isole,italy
+9-267-194,267,194,0.042,sardegna,isole,italy
+9-267-195,267,195,0.123,sardegna,isole,italy
+9-268-181,268,181,0.167,piemonte,nord-ovest,italy alps
+9-268-182,268,182,0.944,lombardia,nord-ovest,italy alps
+9-268-183,268,183,1.0,lombardia,nord-ovest,italy
+9-268-184,268,184,1.0,piemonte,nord-ovest,italy
+9-268-185,268,185,0.473,liguria,nord-ovest,italy
+9-268-191,268,191,0.109,sardegna,isole,italy corse
+9-268-192,268,192,0.912,sardegna,isole,italy
+9-268-193,268,193,0.993,sardegna,isole,italy
+9-268-194,268,194,0.978,sardegna,isole,italy
+9-268-195,268,195,0.768,sardegna,isole,italy
+9-269-181,269,181,0.64,lombardia,nord-ovest,italy alps
+9-269-182,269,182,1.0,lombardia,nord-ovest,italy
+9-269-183,269,183,1.0,lombardia,nord-ovest,italy
+9-269-184,269,184,1.0,emilia_romagna,nord-est,italy
+9-269-185,269,185,0.783,liguria,nord-ovest,italy
+9-269-186,269,186,0.013,liguria,nord-ovest,italy
+9-269-187,269,187,0.003,toscana,centro,italy corse
+9-269-188,269,188,0.015,toscana,centro,italy corse
+9-269-191,269,191,0.357,sardegna,isole,italy corse
+9-269-192,269,192,0.89,sardegna,isole,italy
+9-269-193,269,193,0.82,sardegna,isole,italy
+9-269-194,269,194,0.767,sardegna,isole,italy
+9-269-195,269,195,0.283,sardegna,isole,italy
+9-270-180,270,180,0.182,trentino_alto_adige,nord-est,italy alps
+9-270-181,270,181,0.875,lombardia,nord-ovest,italy alps
+9-270-182,270,182,1.0,lombardia,nord-ovest,italy
+9-270-183,270,183,1.0,lombardia,nord-ovest,italy
+9-270-184,270,184,1.0,emilia_romagna,nord-est,italy
+9-270-185,270,185,1.0,emilia_romagna,nord-est,italy
+9-270-186,270,186,0.542,toscana,centro,italy
+9-270-187,270,187,0.189,toscana,centro,italy
+9-270-188,270,188,0.194,toscana,centro,italy
+9-270-189,270,189,0.018,toscana,centro,italy
+9-270-192,270,192,0.001,sardegna,isole,italy
+9-271-180,271,180,0.645,trentino_alto_adige,nord-est,italy alps
+9-271-181,271,181,1.0,trentino_alto_adige,nord-est,italy
+9-271-182,271,182,1.0,trentino_alto_adige,nord-est,italy
+9-271-183,271,183,1.0,veneto,nord-est,italy
+9-271-184,271,184,1.0,emilia_romagna,nord-est,italy
+9-271-185,271,185,1.0,emilia_romagna,nord-est,italy
+9-271-186,271,186,1.0,toscana,centro,italy
+9-271-187,271,187,1.0,toscana,centro,italy
+9-271-188,271,188,0.667,toscana,centro,italy
+9-271-189,271,189,0.106,toscana,centro,italy
+9-272-179,272,179,0.002,trentino_alto_adige,nord-est,italy alps
+9-272-180,272,180,0.95,trentino_alto_adige,nord-est,italy alps
+9-272-181,272,181,1.0,trentino_alto_adige,nord-est,italy
+9-272-182,272,182,1.0,veneto,nord-est,italy
+9-272-183,272,183,1.0,veneto,nord-est,italy
+9-272-184,272,184,1.0,emilia_romagna,nord-est,italy
+9-272-185,272,185,1.0,emilia_romagna,nord-est,italy
+9-272-186,272,186,1.0,toscana,centro,italy
+9-272-187,272,187,1.0,toscana,centro,italy
+9-272-188,272,188,1.0,toscana,centro,italy
+9-272-189,272,189,0.614,lazio,centro,italy
+9-272-190,272,190,0.007,lazio,centro,italy
+9-272-199,272,199,0.009,sicilia,isole,italy
+9-273-179,273,179,0.044,trentino_alto_adige,nord-est,italy alps
+9-273-180,273,180,0.624,trentino_alto_adige,nord-est,italy alps
+9-273-181,273,181,1.0,veneto,nord-est,italy
+9-273-182,273,182,1.0,veneto,nord-est,italy
+9-273-183,273,183,0.693,veneto,nord-est,italy
+9-273-184,273,184,0.653,emilia_romagna,nord-est,italy
+9-273-185,273,185,0.61,emilia_romagna,nord-est,italy
+9-273-186,273,186,0.995,emilia_romagna,nord-est,italy
+9-273-187,273,187,1.0,umbria,centro,italy
+9-273-188,273,188,1.0,umbria,centro,italy
+9-273-189,273,189,1.0,lazio,centro,italy
+9-273-190,273,190,0.596,lazio,centro,italy
+9-273-191,273,191,0.017,lazio,centro,italy
+9-273-197,273,197,0.255,sicilia,isole,italy
+9-273-198,273,198,0.048,sicilia,isole,italy
+9-273-199,273,199,0.035,sicilia,isole,italy
+9-273-201,273,201,0.026,sicilia,isole,italy
+9-274-180,274,180,0.134,friuli_venezia_giulia,nord-est,italy alps
+9-274-181,274,181,1.0,friuli_venezia_giulia,nord-est,italy
+9-274-182,274,182,0.92,friuli_venezia_giulia,nord-est,italy
+9-274-183,274,183,0.037,veneto,nord-est,italy croatia
+9-274-186,274,186,0.563,marche,centro,italy
+9-274-187,274,187,1.0,marche,centro,italy
+9-274-188,274,188,1.0,umbria,centro,italy
+9-274-189,274,189,1.0,lazio,centro,italy
+9-274-190,274,190,1.0,lazio,centro,italy
+9-274-191,274,191,0.372,lazio,centro,italy
+9-274-192,274,192,0.036,lazio,centro,italy
+9-274-196,274,196,0.012,sicilia,isole,italy
+9-274-197,274,197,0.792,sicilia,isole,italy
+9-274-198,274,198,0.411,sicilia,isole,italy
+9-274-201,274,201,0.01,sicilia,isole,italy
+9-275-180,275,180,0.017,friuli_venezia_giulia,nord-est,italy alps
+9-275-181,275,181,0.352,friuli_venezia_giulia,nord-est,italy alps slovenia
+9-275-182,275,182,0.397,friuli_venezia_giulia,nord-est,italy alps slovenia
+9-275-183,275,183,0.007,friuli_venezia_giulia,nord-est,italy croatia slovenia
+9-275-186,275,186,0.038,marche,centro,italy croatia
+9-275-187,275,187,0.553,marche,centro,italy
+9-275-188,275,188,0.874,abruzzo,sud,italy
+9-275-189,275,189,1.0,abruzzo,sud,italy
+9-275-190,275,190,1.0,abruzzo,sud,italy
+9-275-191,275,191,0.681,lazio,centro,italy
+9-275-192,275,192,0.087,campania,sud,italy
+9-275-197,275,197,0.616,sicilia,isole,italy
+9-275-198,275,198,0.924,sicilia,isole,italy
+9-275-199,275,199,0.055,sicilia,isole,italy
+9-276-188,276,188,0.011,abruzzo,sud,italy
+9-276-189,276,189,0.637,abruzzo,sud,italy
+9-276-190,276,190,1.0,molise,sud,italy
+9-276-191,276,191,1.0,campania,sud,italy
+9-276-192,276,192,0.578,campania,sud,italy
+9-276-196,276,196,0.022,sicilia,isole,italy
+9-276-197,276,197,0.631,sicilia,isole,italy
+9-276-198,276,198,1.0,sicilia,isole,italy
+9-276-199,276,199,0.487,sicilia,isole,italy
+9-277-189,277,189,0.014,molise,sud,italy
+9-277-190,277,190,0.891,puglia,sud,italy
+9-277-191,277,191,1.0,campania,sud,italy
+9-277-192,277,192,0.942,campania,sud,italy
+9-277-193,277,193,0.52,campania,sud,italy
+9-277-195,277,195,0.002,sicilia,isole,italy
+9-277-196,277,196,0.1,sicilia,isole,italy
+9-277-197,277,197,0.776,sicilia,isole,italy
+9-277-198,277,198,0.595,sicilia,isole,italy
+9-277-199,277,199,0.565,sicilia,isole,italy
+9-278-189,278,189,0.015,puglia,sud,italy croatia
+9-278-190,278,190,0.727,puglia,sud,italy
+9-278-191,278,191,0.957,puglia,sud,italy
+9-278-192,278,192,1.0,basilicata,sud,italy
+9-278-193,278,193,0.924,basilicata,sud,italy
+9-278-194,278,194,0.469,calabria,sud,italy
+9-278-195,278,195,0.129,calabria,sud,italy
+9-278-196,278,196,0.408,calabria,sud,italy
+9-278-197,278,197,0.558,calabria,sud,italy
+9-279-190,279,190,0.017,puglia,sud,italy
+9-279-191,279,191,0.539,puglia,sud,italy
+9-279-192,279,192,1.0,puglia,sud,italy
+9-279-193,279,193,0.803,basilicata,sud,italy
+9-279-194,279,194,0.758,calabria,sud,italy
+9-279-195,279,195,0.969,calabria,sud,italy
+9-279-196,279,196,0.559,calabria,sud,italy
+9-279-197,279,197,0.035,calabria,sud,italy
+9-280-191,280,191,0.11,puglia,sud,italy
+9-280-192,280,192,0.912,puglia,sud,italy
+9-280-193,280,193,0.137,puglia,sud,italy
+9-280-194,280,194,0.092,calabria,sud,italy
+9-280-195,280,195,0.348,calabria,sud,italy
+9-281-192,281,192,0.402,puglia,sud,italy
+9-281-193,281,193,0.642,puglia,sud,italy
+9-281-194,281,194,0.042,puglia,sud,italy
+9-282-193,282,193,0.234,puglia,sud,italy
+9-282-194,282,194,0.043,puglia,sud,italy
