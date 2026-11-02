@@ -11,8 +11,8 @@ A cell is a z9 tile that touches one of the 20 Italian regions. For each cell:
                cell (checked in M1-01: alps, slovenia, croatia and corse are the ones with
                foreign land in some cell).
 
-Writes cells.csv and cells.geojson (cell squares with their properties, to check the groups on
-a map, e.g. geojson.io).
+Writes cells.csv, cells.geojson (cell squares with their properties, to check the groups on
+a map, e.g. geojson.io) and area.geojson (union of the cells, to clip the OSM extract).
 
 Usage: python3 -I pipeline/coverage.py work/osm/regions work/osm/italy.poly \
            work/osm/neighbours coverage
@@ -107,6 +107,9 @@ def main(regions_dir: str, italy_poly: str, neighbours_dir: str, out_dir: str) -
         writer.writerows(rows)
     with open(out / "cells.geojson", "w", encoding="utf-8") as f:
         json.dump({"type": "FeatureCollection", "features": features}, f)
+    area = unary_union([box(*tile_bounds(r["x"], r["y"])) for r in rows])
+    with open(out / "area.geojson", "w", encoding="utf-8") as f:
+        json.dump({"type": "Feature", "properties": {}, "geometry": mapping(area)}, f)
     print(f"{len(rows)} cells", file=sys.stderr)
 
 

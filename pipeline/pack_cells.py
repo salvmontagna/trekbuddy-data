@@ -3,10 +3,13 @@
 
 A cell gets every tile, on every hierarchy level, whose bounding box intersects the cell:
 level 2 (0.25 deg) for local paths, levels 1 (1 deg) and 0 (4 deg) for the long-distance
-network that Valhalla needs to connect them.
+network that Valhalla needs to connect them. routing.tar.gz (gzip -9) is the file the app
+downloads; it unpacks it after checking the hash.
 Usage: python3 -I pipeline/pack_cells.py work/valhalla/tiles work/cells 272/180 271/181 275/189
 """
+import gzip
 import math
+import shutil
 import sys
 import tarfile
 from pathlib import Path
@@ -59,6 +62,9 @@ def main(tiles_dir: str, out_dir: str, cells: list[str]) -> None:
         for level, (count, size) in per_level.items():
             print(f"{ZOOM}-{x}-{y},{level},{count},{size}")
         print(f"{ZOOM}-{x}-{y},tar,,{(out / 'routing.tar').stat().st_size}")
+        with open(out / "routing.tar", "rb") as src, gzip.open(out / "routing.tar.gz", "wb", compresslevel=9) as dst:
+            shutil.copyfileobj(src, dst, 1 << 20)
+        print(f"{ZOOM}-{x}-{y},tar.gz,,{(out / 'routing.tar.gz').stat().st_size}")
 
 
 if __name__ == "__main__":
